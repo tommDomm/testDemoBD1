@@ -26,8 +26,8 @@ public class AircraftRepo implements IAircraftRepo {
         ObjectMapper objectMapper=new ObjectMapper();
         TypeReference<HashMap<String,String>> typeRef
                 = new TypeReference<HashMap<String,String>>() {};
-        try(Connection connection = source.getConnection();) {
-            Statement stmt = connection.createStatement();
+        try(Connection connection = source.getConnection();
+            Statement stmt = connection.createStatement();) {
             ResultSet rst = stmt.executeQuery("SELECT aircraft_code,model,range FROM bookings.aircrafts_data");
             while (rst.next()) {
                 Aircraft aircraft=new Aircraft(rst.getString(1),objectMapper.readValue(rst.getString(2), typeRef),rst.getInt(3));

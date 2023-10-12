@@ -20,8 +20,8 @@ public class FlightRepo implements IFlightRepo {
     public List<Flight> getFlightList(int offset) {
         List<Flight> flightList = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ssZZ");
-        try (Connection connection = source.getConnection();) {
-            PreparedStatement pstmt = connection.prepareStatement("select  flight_no, scheduled_departure, scheduled_arrival, departure_airport, arrival_airport, status, aircraft_code from flights limit 30 offset (?)");
+        try (Connection connection = source.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("select  flight_no, scheduled_departure, scheduled_arrival, departure_airport, arrival_airport, status, aircraft_code from flights limit 30 offset (?)");) {
             pstmt.setInt(1, offset);
             ResultSet rst = pstmt.executeQuery();
             while (rst.next()) {

@@ -27,8 +27,8 @@ public class AirportRepo implements IAirportRepo {
         TypeReference<HashMap<String, String>> typeRef
                 = new TypeReference<HashMap<String, String>>() {
         };
-        try (Connection connection = source.getConnection();) {
-            Statement stmt = connection.createStatement();
+        try (Connection connection = source.getConnection();
+            Statement stmt = connection.createStatement();) {
             ResultSet rst = stmt.executeQuery("SELECT airport_code, airport_name, city, coordinates, timezone FROM bookings.airports_data");
             while (rst.next()) {
                 Airport airport = new Airport(rst.getString(1), objectMapper.readValue(rst.getString(2), typeRef), objectMapper.readValue(rst.getString(3), typeRef), rst.getString(4), rst.getString(5));
